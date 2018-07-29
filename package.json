@@ -12,6 +12,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "http": "0.0.0",
+    "lodash": "^4.17.10",
     "require": "^2.4.20",
     "slackhooks": "^1.0.1"
   }

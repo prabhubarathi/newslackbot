@@ -60,14 +60,6 @@ function chuckjoke() {
     )
 }
 
-function iplookup() {
-
-    iplookup.getInfo('173.194.72.94', function (ret) {
-        bot.postMessageToChannel('general',`iplooku ${ret}`);
-    }
-    )
-}
-
 
 function namelookup() {
     var config = {

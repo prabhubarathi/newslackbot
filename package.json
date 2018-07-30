@@ -33,6 +33,7 @@
     "nodemon": "^1.18.3",
     "oauth-sign": "^0.8.2",
     "performance-now": "^2.1.0",
+    "request": "^2.87.0",
     "require": "^2.4.20",
     "slackbots": "^1.1.0",
     "slackhooks": "^1.0.1",

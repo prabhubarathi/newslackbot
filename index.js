@@ -6,42 +6,36 @@ const entitytype = "EC2Instance";
 
 const Botkit = require('botkit')
 var request = require ('request')
-
+var fs = require('fs')
 var slackToken = 'xoxb-386509464003-401409504435-gNZiKPgqCEXoJwfDI9nniyAU'
 
-var controller = Botkit.slackbot({
-    debug: false
-})
+
+if (!process.env.slack_token_path) {
+    console.log('Error: Specify slack_token_path in environment')
+    process.exit(1)
+  }
+  
+  fs.readFile(process.env.slack_token_path, function (err, data) {
+    if (err) {
+      console.log('Error: Specify token in slack_token_path file')
+      process.exit(1)
+    }
+    data = String(data)
+    data = data.replace(/\s/g, '')
+    controller
+      .spawn({token: data})
+      .startRTM(function (err) {
+        if (err) {
+          throw new Error(err)
+        }
+      })
+  })
+
+var controller = Botkit.slackbot({debug: false})
 
 var bot = new SlackBot ({
-    token: slackToken ,
-    name: 'jarvis'
+    token: slackToken,
 })
-
-bot.on('start', () => {
-    const params = {
-        icon_emoji: ':smiley:'
-    }
-    bot.postMessageToChannel('general','Hey there, Jarvis Here! What can i do?',params);
-}
-
-);
-
-bot.on('error',err => console.log(err));
-
-bot.on ('message', data => {
-    if (data.type !== 'message') {
-        return;
-    }
-    handleMessage(data.text)
-});
-
-//connecting into slack
-
-controller.spawn({ token: slackToken }).startRTM(function (err, bot, payload) {
-    if (err) throw new Error('Error connecting to Slack: ', err)
-    console.log('Connected to Slack')
-  }) 
 
 // wire up DMs and direct mentions to 
 

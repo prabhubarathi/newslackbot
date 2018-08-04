@@ -17,3 +17,13 @@ spec:
                                                    # with your project ID.
         ports:
           - containerPort: 443
+        volumeMounts:
+        - name: slack-token
+          mountPath: /etc/slack-token
+        env:
+        - name: slack_token_path
+          value: /etc/slack-token/slack-token
+      volumes:
+      - name: slack-token
+        secret:
+          secretName: slack-token  

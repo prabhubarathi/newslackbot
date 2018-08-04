@@ -9,7 +9,6 @@ var request = require ('request')
 var fs = require('fs')
 var slackToken = 'xoxb-386509464003-401409504435-gNZiKPgqCEXoJwfDI9nniyAU'
 
-
 if (!process.env.slack_token_path) {
     console.log('Error: Specify slack_token_path in environment')
     process.exit(1)

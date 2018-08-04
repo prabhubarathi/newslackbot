@@ -16,4 +16,4 @@ spec:
         image: gcr.io/slackbot-212201/slack-codelab:v1  # Replace PROJECT_ID
                                                    # with your project ID.
         ports:
-          - containerPort: 3000
+          - containerPort: 443

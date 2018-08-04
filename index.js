@@ -4,8 +4,7 @@ const authtoken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2bXdhcmUuY29t
 
 const entitytype = "EC2Instance";
 
-const Botkit = require('botkit')
-var request = require ('request')
+var Botkit = require('botkit')
 var fs = require('fs')
 var slackToken = 'xoxb-386509464003-401409504435-gNZiKPgqCEXoJwfDI9nniyAU'
 
@@ -263,7 +262,6 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
-
 
 
 controller.hears(['pizzatime'],['ambient','direct_message'],function(bot,message) {

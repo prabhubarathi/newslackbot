@@ -38,6 +38,10 @@ var bot = new SlackBot ({
 
 // wire up DMs and direct mentions to 
 
+controller.hears(
+    ['meow', 'kitty'], ['direct_message', 'direct_mention', 'mention'],
+    function (bot, message) { bot.reply(message, 'Meow. :smile_cat:') })
+
 controller.hears('chuck norris','direct_message,direct_mention', function chuckjoke() {
     axios.get ('http://api.icndb.com/jokes/random')
       .then(res => {

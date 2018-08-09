@@ -40,6 +40,7 @@ var bot = new SlackBot ({
 controller.hears(
     ['meow', 'kitty'], ['direct_message', 'direct_mention', 'mention'],
     function (bot, message) { bot.reply(message, 'Meow. :smile_cat:') })
+    
 
 controller.hears('chuck norris','direct_message,direct_mention', function chuckjoke() {
     axios.get ('http://api.icndb.com/jokes/random')
@@ -52,6 +53,39 @@ controller.hears('chuck norris','direct_message,direct_mention', function chuckj
         }
     )
 })
+
+controller.hears('ask fitcycle','direct_message,direct_mention', function fitcycle(bot,message) {
+    axios.get ('http://13.56.14.98/api/v1.0/signups')
+      .then(res => {
+          const allusers= res.data.polls_prospect;
+          var jsonData=JSON.stringify (allusers)
+          var fs = require('fs');
+          fs.writeFile("test.json", jsonData, function(err) {
+              if (err) {
+                  console.log(err);
+              }
+          });
+          const first_name = res.data.polls_prospect[1].firstname;
+          const last_name = res.data.polls_prospect[1].lastname
+          console.log(first_name)
+          console.log(last_name)
+        bot.reply(message,`The Winner is ${first_name} ${last_name}` )
+        }
+    )
+})
+
+controller.hears('fitcycle users','direct_message,direct_mention', function fitcycle_users(bot,message) {
+    axios.post ('https://hooks.slack.com/services/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', 
+    {
+        "text": "Here are the latest Fitcycle Users",
+    "attachments": [
+        {
+            "text": "And here’s an attachment!"
+        }
+    ]
+    }
+)
+})    
 
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
 

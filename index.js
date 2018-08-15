@@ -1,6 +1,8 @@
 const SlackBot = require('slackbots') ;
 const axios = require('axios');
 const authtoken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2bXdhcmUuY29tOjRlYTE0N2ExLWVkNWQtNGE1OC05MjBlLThhNDMyZmFhMTA4YSIsImF6cCI6ImNzcF9wcmRfZ2F6X2ludGVybmFsX2NsaWVudF9pZCIsImRvbWFpbiI6InZtd2FyZS5jb20iLCJjb250ZXh0IjoiZjZjZmY1MjgtMTNjMC00ODBlLTgzOTctMDQ0NDk5ZjU2ZDI4IiwiaXNzIjoiaHR0cHM6Ly9nYXouY3NwLXZpZG0tcHJvZC5jb20iLCJwZXJtcyI6WyJleHRlcm5hbC9aRjh1YU5yY3dtdmtSX1l6Q2hQSmpOZ3dLTjhfL25zeDpjbG91ZF9zZXJ2aWNlX2FkbWluIiwiZXh0ZXJuYWwvWkY4dWFOcmN3bXZrUl9ZekNoUEpqTmd3S044Xy9uc3g6Y2xvdWRfc2VydmljZV9hdWRpdG9yIiwiZXh0ZXJuYWwvbzNlY2JzQXZqcHc2bG1MM2FsaUpYMjl6VmhFXy92a2U6c2VydmljZS11c2VyIiwiZXh0ZXJuYWwvN2NKMm5nU19oUkNZX2JJYld1Y000S1dRd09vXy9sb2ctaW50ZWxsaWdlbmNlOnVzZXIiLCJleHRlcm5hbC9Zdy1IeUJlUXpqQ1hrTDJ3UVNlR3dhdUotbUFfL2NhdGFsb2c6dXNlciIsImNzcDpvcmdfbWVtYmVyIiwiZXh0ZXJuYWwvWnk5MjRtRTNkd24yQVN5VlpSME5uN2x1cGVBXy9hdXRvbWF0aW9uc2VydmljZTp1c2VyIiwiZXh0ZXJuYWwvOXFqb05hZkRwOVhreXlRTGNMQ0tXUHNBaXIwXy92cm5pOmFkbWluIiwiZXh0ZXJuYWwvN2NKMm5nU19oUkNZX2JJYld1Y000S1dRd09vXy9sb2ctaW50ZWxsaWdlbmNlOmFkbWluIiwiZXh0ZXJuYWwvdWx2cXRONDE0MWJlQ1Qyb09uYmotd2xrekdnXy9Db2RlU3RyZWFtOmRldmVsb3BlciIsImV4dGVybmFsL1NvQ0QzMjZkWS10R0JzTGFKZjRBSEVzbmFXMF8vZGlzY292ZXJ5OnVzZXIiLCJleHRlcm5hbC9sR29ucl9sbkJIeXdxS1BuMzJROFVmMjJuallfL2Rpc2NvdmVyeTp1c2VyIl0sImNvbnRleHRfbmFtZSI6ImJmZDdhNzUxLWIyZjUtNDNhMy1iMmIzLTBjODJkNjg5NmFlZSIsImV4cCI6MTUzMzkzNDI5OCwiaWF0IjoxNTMzOTMyNDk4LCJqdGkiOiJlZGY5ZTNiNS04YWE0LTQ0YzktYWExNy1mNzMxMWFhZmNkMzUiLCJ1c2VybmFtZSI6InBiYXJhdGhpIn0.MDfiAnCDAfF9rVG3ZUvGptdAECy-X8hMvCGKXVgvLdDv2ttAgdp5q1zdZOFNgScWzDTv3nAZQrCXECyG_RCUdfdahgoEGLSM6uUS40QNJ_Bz9o6Wxs7rgkR_4wdFFfeaIm9F4WPgdNRsJZeV1mRp8D3zTBtXJJ6t9neVD4iBxaiTARlDstPH-_HJx1HQnPQ26vR7VkVAqduxCWhuP0PQKACoAX3189D4lJ9cLUO5iyg8Xh7D527ewb1yZnzaEn-jKNSjrqLLig10DHOtEtKxEVCvFvcLxKPbqWOrn8uScIcTVBvFKt5_TXRE_UmaioDCKKQfgoHcSxdx0nWxzzdx7g'
+const vke_token = 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwYmFyYXRoaUB2bXdhcmUuY29tIiwiaXNzIjoiaHR0cHM6XC9cL2xpZ2h0d2F2ZS52a2UuY2xvdWQudm13YXJlLmNvbVwvb3BlbmlkY29ubmVjdFwvYmZkN2E3NTEtYjJmNS00M2EzLWIyYjMtMGM4MmQ2ODk2YWVlIiwiZ3JvdXBzIjpbImJmZDdhNzUxLWIyZjUtNDNhMy1iMmIzLTBjODJkNjg5NmFlZVxcVktFU2VydmljZVVzZXJzIiwiYmZkN2E3NTEtYjJmNS00M2EzLWIyYjMtMGM4MmQ2ODk2YWVlXFxpbnRlcmVzdHdlYmRldiIsImJmZDdhNzUxLWIyZjUtNDNhMy1iMmIzLTBjODJkNjg5NmFlZVxcRXZlcnlvbmUiXSwidG9rZW5fY2xhc3MiOiJhY2Nlc3NfdG9rZW4iLCJ0b2tlbl90eXBlIjoiQmVhcmVyIiwiYXVkIjpbInBiYXJhdGhpQHZtd2FyZS5jb20iLCJyc19hZG1pbl9zZXJ2ZXIiLCJyc192bWRpciJdLCJzY29wZSI6InJzX2FkbWluX3NlcnZlciBhdF9ncm91cHMgb3BlbmlkIG9mZmxpbmVfYWNjZXNzIHJzX3ZtZGlyIGlkX2dyb3VwcyIsIm11bHRpX3RlbmFudCI6ZmFsc2UsImV4cCI6MTUzNDMzMzcxNiwiaWF0IjoxNTM0MjkwNTE2LCJqdGkiOiI2T094cl9rbVlhZEp1QkE1SXRER0tKemNrci1sczdBcWMzLTZHdTZGSmpZIiwidGVuYW50IjoiYmZkN2E3NTEtYjJmNS00M2EzLWIyYjMtMGM4MmQ2ODk2YWVlIiwiYWRtaW5fc2VydmVyX3JvbGUiOiJHdWVzdFVzZXIifQ.XouuTwih5IcdCd3rqOI93fGln5aK5_l5jPt1IKmFCQiUBhOk5YWhSX2pZn6eOeHX739apoV4gENcTTncRVU9WdcX5oPj3gV-wccXvSHm8tOA74CtTT5twn1-C4ebtCzUKgUfb_bkZ5ooDOI9JDPkzy4KWjyzibjQrgD-IwHHw7sjxyRuq10MFya58_1TfziTGiswFoY6r1S-uxRLp7P2vOI8WJm4qxd05VUkR0YYId-oRyAsSPk1tvoOr5uPPBW3zJqDvNcV2E581wQT-mpoo4IXxqRYStKo_o03L4pllPuow2SsQsHY16Ak3Gjn17hI3lTs2LUgxXB7a2tVIS8Snw'
+
 
 const entitytype = "EC2Instance";
 
@@ -125,7 +127,24 @@ controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_men
     });
 });
 
+controller.hears(['Get VKE Cluster Name'], 'direct_message,direct_mention,mention', function(bot,message) {
 
+    var config = {
+        headers: {
+            'Authorization' : vke_token
+        }
+     }
+
+    axios.get('https://api.vke.cloud.vmware.com//v1//orgs/bfd7a751-b2f5-43a3-b2b3-0c82d6896aee/clusters/',config)
+        .then (res => {
+            const cluster_name = res.data.items[2].name;
+            const projectName = res.data.items[2].projectName
+            console.log(cluster_name)
+            bot.reply(message, 'Your VKE Cluster Name is ' +cluster_name +    'Project Name is'   +projectName )
+        }
+        )
+}         
+)
 
 controller.hears(['who is IP address (.*)', 'find IP address (.*)'], 'direct_message,direct_mention,mention', function (bot,message) {
     var ipadd = message.match[1];
